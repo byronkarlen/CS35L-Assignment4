@@ -1,0 +1,38 @@
+#!/usr/bin/python3
+
+import sys
+import string
+
+input = sys.stdin
+
+dict = {}
+
+for line in input:
+    if 'CommitDate: ' in line:
+        timezone = line[len(line)-6:len(line)-1]
+
+        if timezone in dict:
+            dict[timezone] = int(dict[timezone]) + 1
+        else:
+            dict[timezone] = 1
+#print(dict)
+
+
+key_list = []
+for key in dict.keys():
+    key_list.append(key)
+
+def my_sort(num):
+    if '-' in num:
+        newnum = num[1:]
+        return -1*(int(newnum))
+    elif '+' in num:
+        newnum = num[1:]
+        return int(newnum)
+    else:
+        return int(num)
+
+key_list.sort(key=my_sort)
+
+for key in key_list:
+    print(str(key) + ' ' + str(dict[key]))
